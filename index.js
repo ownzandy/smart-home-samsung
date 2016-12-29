@@ -9,13 +9,13 @@ var app = express()
 var sleep = require('sleep');
 
 app.get('/vol_up', function (req, res) {
-  multipleKey('KEY_VOLUP', 'Volume increased', 'Failed to increase volume', 10, 250, function callback(response) {
+  multipleKey('KEY_VOLUP', 'Volume increased', {'error': 'Failed to increase volume'}, 10, 250, function callback(response) {
     res.json(response)
   })
 })
 
 app.get('/vol_down', function (req, res) {
-  multipleKey('KEY_VOLDOWN', 'Volume decreased', 'Failed to decrease volume', 10, 250, function callback(response) {
+  multipleKey('KEY_VOLDOWN', 'Volume decreased', {'error': 'Failed to decrease volume'}, 10, 250, function callback(response) {
     res.json(response)
   })
 })
@@ -40,7 +40,7 @@ var multipleKey = function(key, success, error, counter, interval, cb) {
 app.get('/off', function (req, res) {
   remote.send('KEY_POWEROFF', function callback(err) {
       if (err) {
-        res.json('Failed to power off')
+        res.json({'error': 'Failed to power off'})
       } else {
         res.json('Powered TV off')
       }
@@ -50,7 +50,7 @@ app.get('/off', function (req, res) {
 app.get('/chinese', function (req, res) {
   remote.send('KEY_TV', function callback(err) {
       if (err) {
-        res.json('Failed to change to TV source')
+        res.json({'error': 'Failed to change to TV source'})
       } else {
         sleep.sleep(2)
         multipleKey('KEY_HDMI', 'Switched to Chinese Source', 'Failed to switch to Chinese source', 2, 2000, function callback(response) {
