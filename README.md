@@ -1,1 +1,1 @@
-# smart-home-samsung
+# smart-home-samsung-tv
