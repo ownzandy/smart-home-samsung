@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "alexa-verifier": "0.0.5",
     "express": "^4.14.0",
     "samsung-remote": "^1.2.5",
     "sleep": "^5.0.0"
