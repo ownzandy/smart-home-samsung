@@ -1,1 +1,1 @@
-# smart-home-alexa-tv
+# smart-home-samsung
