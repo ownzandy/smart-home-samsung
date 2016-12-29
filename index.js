@@ -1,6 +1,6 @@
 var SamsungRemote = require('samsung-remote')
 var remote = new SamsungRemote({
-    ip: '192.168.0.4'
+    ip: '192.168.0.2'
 })
 
 var express = require('express')
@@ -8,13 +8,23 @@ var app = express()
 
 var sleep = require('sleep');
 
-app.get('/vol_up', function (req, res) {
+app.get('/mute', function(req, res) {
+  remote.send('KEY_MUTE', function callback(err) {
+      if (err) {
+        res.json({'error': 'Failed to mute or un-mute'})
+      } else {
+        res.json('TV muted/un-muted')
+      }
+  })
+})
+
+app.get('/vol_up', function(req, res) {
   multipleKey('KEY_VOLUP', 'Volume increased', {'error': 'Failed to increase volume'}, 10, 250, function callback(response) {
     res.json(response)
   })
 })
 
-app.get('/vol_down', function (req, res) {
+app.get('/vol_down', function(req, res) {
   multipleKey('KEY_VOLDOWN', 'Volume decreased', {'error': 'Failed to decrease volume'}, 10, 250, function callback(response) {
     res.json(response)
   })
@@ -44,7 +54,7 @@ var multipleKey = function(key, success, error, counter, interval, cb) {
   }, interval)
 }
 
-app.get('/off', function (req, res) {
+app.get('/off', function(req, res) {
   remote.send('KEY_POWEROFF', function callback(err) {
       if (err) {
         res.json({'error': 'Failed to power off'})
@@ -54,7 +64,7 @@ app.get('/off', function (req, res) {
   })
 })
 
-app.get('/chinese', function (req, res) {
+app.get('/chinese', function(req, res) {
   remote.send('KEY_TV', function callback(err) {
       if (err) {
         res.json({'error': 'Failed to change to TV source'})
