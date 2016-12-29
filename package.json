@@ -1,0 +1,18 @@
+{
+  "name": "samsung",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "alexa-verifier": "0.0.5",
+    "express": "^4.14.0",
+    "samsung-remote": "^1.2.5",
+    "sleep": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
