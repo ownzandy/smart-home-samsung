@@ -1,6 +1,6 @@
 var SamsungRemote = require('samsung-remote')
 var remote = new SamsungRemote({
-    ip: '192.168.0.4' // required: IP address of your Samsung Smart TV
+    ip: '192.168.0.4'
 })
 
 var express = require('express')
@@ -22,18 +22,25 @@ app.get('/vol_down', function (req, res) {
 
 var multipleKey = function(key, success, error, counter, interval, cb) {
   var count = 0
+  var intervalOn = true
   var interval = setInterval(function(){ 
     if(count == counter) {
       clearInterval(interval)
+      intervalOn = false
       return cb(success)
+    } else if(intervalOn) {
+      remote.send(key, function callback(err) {
+          if (err) {
+            clearInterval(interval)
+            if(intervalOn) {
+              intervalOn = false
+              return cb(error)
+            }
+          } else {
+            count += 1
+          }
+      });
     }
-    remote.send(key, function callback(err) {
-        if (err) {
-          return cb(error)
-        } else {
-          count += 1
-        }
-    });
   }, interval)
 }
 
