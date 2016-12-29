@@ -13,6 +13,7 @@ app.get('/mute', function(req, res) {
       if (err) {
         res.json({'error': 'Failed to mute or un-mute'})
       } else {
+        sleep.sleep(1)
         res.json('TV muted/un-muted')
       }
   })
