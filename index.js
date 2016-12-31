@@ -20,13 +20,13 @@ app.get('/mute', function(req, res) {
 })
 
 app.get('/vol_up', function(req, res) {
-  multipleKey('KEY_VOLUP', 'Volume increased', {'error': 'Failed to increase volume'}, 10, 250, function callback(response) {
+  multipleKey('KEY_VOLUP', 'Volume increased', {'error': 'Failed to increase volume'}, 5, 250, function callback(response) {
     res.json(response)
   })
 })
 
 app.get('/vol_down', function(req, res) {
-  multipleKey('KEY_VOLDOWN', 'Volume decreased', {'error': 'Failed to decrease volume'}, 10, 250, function callback(response) {
+  multipleKey('KEY_VOLDOWN', 'Volume decreased', {'error': 'Failed to decrease volume'}, 5, 250, function callback(response) {
     res.json(response)
   })
 })
@@ -78,7 +78,7 @@ app.get('/chinese', function(req, res) {
   })
 })
 
-app.get('/american', function(req, res) {
+app.get('/english', function(req, res) {
   remote.send('KEY_TV', function callback(err) {
       if (err) {
         res.json({'error': 'Failed to change to TV source'})
@@ -88,7 +88,7 @@ app.get('/american', function(req, res) {
           if (err) {
             res.json({'error': 'Failed to change to HDMI source'})
           } else {
-            res.json('Switched to American Source')
+            res.json('Switched to English Source')
           }
         })
       }
