@@ -1,6 +1,6 @@
 var SamsungRemote = require('samsung-remote')
 var remote = new SamsungRemote({
-    ip: '192.168.0.2'
+    ip: '192.168.0.9'
 })
 
 var express = require('express')
@@ -71,8 +71,25 @@ app.get('/chinese', function(req, res) {
         res.json({'error': 'Failed to change to TV source'})
       } else {
         sleep.sleep(2)
-        multipleKey('KEY_HDMI', 'Switched to Chinese Source', 'Failed to switch to Chinese source', 2, 2000, function callback(response) {
+        multipleKey('KEY_HDMI', 'Switched to Chinese Source', 'Failed to switch to Chinese source', 2, 1500, function callback(response) {
           res.json(response)
+        })
+      }
+  })
+})
+
+app.get('/american', function(req, res) {
+  remote.send('KEY_TV', function callback(err) {
+      if (err) {
+        res.json({'error': 'Failed to change to TV source'})
+      } else {
+        sleep.sleep(2)
+        remote.send('KEY_HDMI', function callback(err) {
+          if (err) {
+            res.json({'error': 'Failed to change to HDMI source'})
+          } else {
+            res.json('Switched to American Source')
+          }
         })
       }
   })
