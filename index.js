@@ -65,20 +65,7 @@ app.get('/off', function(req, res) {
   })
 })
 
-app.get('/chinese', function(req, res) {
-  remote.send('KEY_TV', function callback(err) {
-      if (err) {
-        res.json({'error': 'Failed to change to TV source'})
-      } else {
-        sleep.sleep(2)
-        multipleKey('KEY_HDMI', 'Switched to Chinese Source', 'Failed to switch to Chinese source', 2, 1500, function callback(response) {
-          res.json(response)
-        })
-      }
-  })
-})
-
-app.get('/english', function(req, res) {
+app.get('/hdmiOne', function(req, res) {
   remote.send('KEY_TV', function callback(err) {
       if (err) {
         res.json({'error': 'Failed to change to TV source'})
@@ -86,10 +73,23 @@ app.get('/english', function(req, res) {
         sleep.sleep(2)
         remote.send('KEY_HDMI', function callback(err) {
           if (err) {
-            res.json({'error': 'Failed to change to HDMI source'})
+            res.json({'error': 'Failed to change to HDMI one'})
           } else {
-            res.json('Switched to English Source')
+            res.json('Switched to HDMI one')
           }
+        })
+      }
+  })
+})
+
+app.get('/hdmiTwo', function(req, res) {
+  remote.send('KEY_TV', function callback(err) {
+      if (err) {
+        res.json({'error': 'Failed to change to TV source'})
+      } else {
+        sleep.sleep(2)
+        multipleKey('KEY_HDMI', 'Switched to HDMI Two', 'Failed to switch to HDMI Two', 2, 1500, function callback(response) {
+          res.json(response)
         })
       }
   })
