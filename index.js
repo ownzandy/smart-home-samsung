@@ -73,7 +73,7 @@ app.get('/hdmiOne', function(req, res) {
         sleep.sleep(2)
         remote.send('KEY_HDMI', function callback(err) {
           if (err) {
-            res.json({'Could not switch TV to HDMI one'})
+            res.json('Could not switch TV to HDMI one')
           } else {
             res.json('TV was switched to HDMI one')
           }
