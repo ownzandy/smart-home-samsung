@@ -37,7 +37,6 @@ app.get('/mute', function(req, res) {
       if (err) {
         res.json('Could not mute your TV')
       } else {
-        sleep.sleep(1)
         res.json('Your TV was muted or un-muted')
       }
   })
