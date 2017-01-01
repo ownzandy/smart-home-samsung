@@ -68,7 +68,7 @@ app.get('/off', function(req, res) {
 app.get('/hdmiOne', function(req, res) {
   remote.send('KEY_TV', function callback(err) {
       if (err) {
-        res.json({'Failed to change to TV source'})
+        res.json('Failed to change to TV source')
       } else {
         sleep.sleep(2)
         remote.send('KEY_HDMI', function callback(err) {
