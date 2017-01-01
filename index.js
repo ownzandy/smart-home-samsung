@@ -8,29 +8,6 @@ var app = express()
 
 var sleep = require('sleep');
 
-app.get('/mute', function(req, res) {
-  remote.send('KEY_MUTE', function callback(err) {
-      if (err) {
-        res.json({'error': 'Failed to mute or un-mute'})
-      } else {
-        sleep.sleep(1)
-        res.json('TV muted/un-muted')
-      }
-  })
-})
-
-app.get('/vol_up', function(req, res) {
-  multipleKey('KEY_VOLUP', 'Volume increased', {'error': 'Failed to increase volume'}, 5, 250, function callback(response) {
-    res.json(response)
-  })
-})
-
-app.get('/vol_down', function(req, res) {
-  multipleKey('KEY_VOLDOWN', 'Volume decreased', {'error': 'Failed to decrease volume'}, 5, 250, function callback(response) {
-    res.json(response)
-  })
-})
-
 var multipleKey = function(key, success, error, counter, interval, cb) {
   var count = 0
   var intervalOn = true
@@ -55,12 +32,35 @@ var multipleKey = function(key, success, error, counter, interval, cb) {
   }, interval)
 }
 
+app.get('/mute', function(req, res) {
+  remote.send('KEY_MUTE', function callback(err) {
+      if (err) {
+        res.json('Could not mute your TV')
+      } else {
+        sleep.sleep(1)
+        res.json('Your TV was muted or un-muted')
+      }
+  })
+})
+
+app.get('/vol_up', function(req, res) {
+  multipleKey('KEY_VOLUP', 'Your volume was increased', 'Could not turn up the volume', 5, 250, function callback(response) {
+    res.json(response)
+  })
+})
+
+app.get('/vol_down', function(req, res) {
+  multipleKey('KEY_VOLDOWN', 'Your volume was decreased', 'Could not decrease the volume', 5, 250, function callback(response) {
+    res.json(response)
+  })
+})
+
 app.get('/off', function(req, res) {
   remote.send('KEY_POWEROFF', function callback(err) {
       if (err) {
-        res.json({'error': 'Failed to power off'})
+        res.json('Could not turn TV off')
       } else {
-        res.json('Powered TV off')
+        res.json('Turned TV Off')
       }
   })
 })
@@ -68,14 +68,14 @@ app.get('/off', function(req, res) {
 app.get('/hdmiOne', function(req, res) {
   remote.send('KEY_TV', function callback(err) {
       if (err) {
-        res.json({'error': 'Failed to change to TV source'})
+        res.json({'Failed to change to TV source'})
       } else {
         sleep.sleep(2)
         remote.send('KEY_HDMI', function callback(err) {
           if (err) {
-            res.json({'error': 'Failed to change to HDMI one'})
+            res.json({'Could not switch TV to HDMI one'})
           } else {
-            res.json('Switched to HDMI one')
+            res.json('TV was switched to HDMI one')
           }
         })
       }
@@ -85,10 +85,10 @@ app.get('/hdmiOne', function(req, res) {
 app.get('/hdmiTwo', function(req, res) {
   remote.send('KEY_TV', function callback(err) {
       if (err) {
-        res.json({'error': 'Failed to change to TV source'})
+        res.json('Failed to change to TV source')
       } else {
-        sleep.sleep(2)
-        multipleKey('KEY_HDMI', 'Switched to HDMI Two', 'Failed to switch to HDMI Two', 2, 1500, function callback(response) {
+        sleep.sleep(1)
+        multipleKey('KEY_HDMI', 'TV was switched to HDMI two', 'Could not switch TV to HDMI two', 2, 1000, function callback(response) {
           res.json(response)
         })
       }
