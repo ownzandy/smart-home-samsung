@@ -3,9 +3,12 @@ var remote = new SamsungRemote({
     ip: '192.168.0.9'
 })
 
+var bashScript = '/home/pi/Development/smart-home-samsung-tv/lirc_command.sh '
+
 var express = require('express')
 var app = express()
 
+var exec = require('child_process').exec
 var sleep = require('sleep');
 
 var multipleKey = function(key, success, error, counter, interval, cb) {
@@ -54,13 +57,33 @@ app.get('/vol_down', function(req, res) {
   })
 })
 
+app.get('/on', function(req, res) {
+  exec(bashScript + 'Samsung KEY_POWER', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not turn TV on')
+    } else {
+      res.json('Turned TV On')
+    }
+  })
+})
+
 app.get('/off', function(req, res) {
   remote.send('KEY_POWEROFF', function callback(err) {
-      if (err) {
-        res.json('Could not turn TV off')
-      } else {
-        res.json('Turned TV Off')
-      }
+    if (err) {
+      res.json('Could not turn TV off')
+    } else {
+      res.json('Turned TV Off')
+    }
+  })
+})
+
+app.get('/aux_toggle', function(req, res) {
+  exec(bashScript + 'Bluray BD_POWER', function(error, stdout, stderr) {
+    if(error != null) { 
+      res.json('Could not turn sound system on')
+    } else {
+      res.json('Turned sound system on')
+    }
   })
 })
 
