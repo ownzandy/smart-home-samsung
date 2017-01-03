@@ -4,7 +4,6 @@ var remote = new SamsungRemote({
 })
 
 var bashScript = '/home/pi/Development/smart-home-samsung-tv/lirc_command.sh '
-
 var express = require('express')
 var app = express()
 
@@ -34,6 +33,97 @@ var multipleKey = function(key, success, error, counter, interval, cb) {
     }
   }, interval)
 }
+
+app.get('/chinese_power', function(req, res) {
+  exec(bashScript + 'Chinese KEY_POWER', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not turn Chinese box on')
+    } else {
+      res.json('Turned Chinese box on')
+    }
+  })
+})
+
+app.get('/chinese_left', function(req, res) {
+  exec(bashScript + 'Chinese KEY_LEFT', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not move left')
+    } else {
+      res.json('Moved left')
+    }
+  })
+})
+
+app.get('/chinese_right', function(req, res) {
+  exec(bashScript + 'Chinese KEY_RIGHT', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not move right')
+    } else {
+      res.json('Moved right')
+    }
+  })
+})
+
+app.get('/chinese_up', function(req, res) {
+  exec(bashScript + 'Chinese KEY_UP', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not move up')
+    } else {
+      res.json('Moved up')
+    }
+  })
+})
+
+app.get('/chinese_down', function(req, res) {
+  exec(bashScript + 'Chinese KEY_DOWN', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not move down')
+    } else {
+      res.json('Moved down')
+    }
+  })
+})
+
+app.get('/chinese_power', function(req, res) {
+  exec(bashScript + 'Chinese KEY_POWER', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not turn Chinese box on')
+    } else {
+      res.json('Turned Chinese box on')
+    }
+  })
+})
+
+app.get('/chinese_ok', function(req, res) {
+  exec(bashScript + 'Chinese KEY_OK', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not perform OK action')
+    } else {
+      res.json('Performed OK action')
+    }
+  })
+})
+
+app.get('/chinese_home', function(req, res) {
+  exec(bashScript + 'Chinese KEY_HOME', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not go to home')
+    } else {
+      res.json('Returned to home')
+    }
+  })
+})
+
+app.get('/chinese_back', function(req, res) {
+  exec(bashScript + 'Chinese KEY_BACK', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not go back')
+    } else {
+      res.json('Performed back action')
+    }
+  })
+})
+
 
 app.get('/mute', function(req, res) {
   remote.send('KEY_MUTE', function callback(err) {
