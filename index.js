@@ -34,6 +34,16 @@ var multipleKey = function(key, success, error, counter, interval, cb) {
   }, interval)
 }
 
+app.get('/chinese_automation', function(req, res) {
+  exec('/home/pi/Development/smart-home-samsung-tv/chinese_automation.sh', function(error, stdout, stderr) {
+    if(error != null) {
+      res.json('Could not automate')
+    } else {
+      res.json('Automated chinese')
+    }
+  })
+})
+
 app.get('/chinese_power', function(req, res) {
   exec(bashScript + 'Chinese KEY_POWER', function(error, stdout, stderr) {
     if(error != null) {
