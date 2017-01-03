@@ -84,16 +84,6 @@ app.get('/chinese_down', function(req, res) {
   })
 })
 
-app.get('/chinese_power', function(req, res) {
-  exec(bashScript + 'Chinese KEY_POWER', function(error, stdout, stderr) {
-    if(error != null) {
-      res.json('Could not turn Chinese box on')
-    } else {
-      res.json('Turned Chinese box on')
-    }
-  })
-})
-
 app.get('/chinese_ok', function(req, res) {
   exec(bashScript + 'Chinese KEY_OK', function(error, stdout, stderr) {
     if(error != null) {
