@@ -1,11 +1,15 @@
 var SamsungRemote = require('samsung-remote')
 var remote = new SamsungRemote({
-    ip: '192.168.0.9'
+    ip: process.env.IP
 })
 
+
+var basicAuth = require('basic-auth-connect')
 var bashScript = '/home/pi/Development/smart-home-samsung-tv/lirc_command.sh '
 var express = require('express')
 var app = express()
+
+app.use(basicAuth(process.env.USER, process.env.PASSWORD))
 
 var exec = require('child_process').exec
 var sleep = require('sleep');

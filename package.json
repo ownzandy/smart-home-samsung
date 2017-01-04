@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "basic-auth-connect": "^1.0.0",
     "express": "^4.14.0",
     "samsung-remote": "^1.2.5",
     "sleep": "^5.0.0"
