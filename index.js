@@ -3,7 +3,6 @@ var remote = new SamsungRemote({
     ip: process.env.IP
 })
 
-
 var basicAuth = require('basic-auth-connect')
 var bashScript = '/home/pi/Development/smart-home-samsung-tv/lirc_command.sh '
 var express = require('express')
