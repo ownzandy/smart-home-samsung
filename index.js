@@ -41,9 +41,9 @@ var multipleKey = function(key, success, error, counter, interval, cb) {
 app.get('/chinese_automation', function(req, res) {
   exec('/home/pi/Development/smart-home-samsung-tv/chinese_automation.sh', function(error, stdout, stderr) {
     if(error != null) {
-      res.json('Could not automate')
+      res.json('Could not start chinese programming')
     } else {
-      res.json('Automated chinese')
+      res.json('Started chinese programming')
     }
   })
 })
@@ -101,9 +101,9 @@ app.get('/chinese_down', function(req, res) {
 app.get('/chinese_ok', function(req, res) {
   exec(bashScript + 'Chinese KEY_OK', function(error, stdout, stderr) {
     if(error != null) {
-      res.json('Could not perform OK action')
+      res.json('Could not perform enter action')
     } else {
-      res.json('Performed OK action')
+      res.json('Performed enter action')
     }
   })
 })
@@ -154,19 +154,9 @@ app.get('/vol_down', function(req, res) {
 app.get('/on', function(req, res) {
   exec(bashScript + 'Samsung KEY_POWER', function(error, stdout, stderr) {
     if(error != null) {
-      res.json('Could not turn TV on')
+      res.json('Could not toggle TV power')
     } else {
-      res.json('Turned TV On')
-    }
-  })
-})
-
-app.get('/off', function(req, res) {
-  remote.send('KEY_POWEROFF', function callback(err) {
-    if (err) {
-      res.json('Could not turn TV off')
-    } else {
-      res.json('Turned TV Off')
+      res.json('Toggled TV power')
     }
   })
 })
