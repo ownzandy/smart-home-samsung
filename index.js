@@ -37,6 +37,16 @@ var multipleKey = function(key, success, error, counter, interval, cb) {
   }, interval)
 }
 
+var multipleIR = function(key, message, counter, interval, cb) {
+  var count = 0
+  while(count < counter) {
+    exec(bashScript + key)
+    count += 1
+    sleep.sleep(interval)
+  }
+  return cb(message)
+}
+
 app.get('/chinese_automation', function(req, res) {
   exec('/home/pi/Development/smart-home-samsung-tv/chinese_automation.sh', function(error, stdout, stderr) {
     if(error != null) {
@@ -67,6 +77,14 @@ app.get('/chinese_left', function(req, res) {
   })
 })
 
+app.get('/chinese_multiple_left', function(req, res) {
+  var number = req.query.number
+  multipleIR('Chinese KEY_LEFT', 'Moved left' + number + ' times', number, 1, function(message) {
+    res.json(message)
+  })
+})
+
+
 app.get('/chinese_right', function(req, res) {
   exec(bashScript + 'Chinese KEY_RIGHT', function(error, stdout, stderr) {
     if(error != null) {
@@ -76,6 +94,14 @@ app.get('/chinese_right', function(req, res) {
     }
   })
 })
+
+app.get('/chinese_multiple_right', function(req, res) {
+  var number = req.query.number
+  multipleIR('Chinese KEY_RIGHT', 'Moved right' + number + ' times', number, 1, function(message) {
+    res.json(message)
+  })
+})
+
 
 app.get('/chinese_up', function(req, res) {
   exec(bashScript + 'Chinese KEY_UP', function(error, stdout, stderr) {
@@ -87,6 +113,14 @@ app.get('/chinese_up', function(req, res) {
   })
 })
 
+app.get('/chinese_multiple_up', function(req, res) {
+  var number = req.query.number
+  multipleIR('Chinese KEY_UP', 'Moved up' + number + ' times', number, 1, function(message) {
+    res.json(message)
+  })
+})
+
+
 app.get('/chinese_down', function(req, res) {
   exec(bashScript + 'Chinese KEY_DOWN', function(error, stdout, stderr) {
     if(error != null) {
@@ -97,12 +131,19 @@ app.get('/chinese_down', function(req, res) {
   })
 })
 
+app.get('/chinese_multiple_down', function(req, res) {
+  var number = req.query.number
+  multipleIR('Chinese KEY_DOWN', 'Moved down' + number + ' times', number, 1, function(message) {
+    res.json(message)
+  })
+})
+
 app.get('/chinese_ok', function(req, res) {
   exec(bashScript + 'Chinese KEY_OK', function(error, stdout, stderr) {
     if(error != null) {
-      res.json('Could not perform enter action')
+      res.json('Could not perform play action')
     } else {
-      res.json('Performed enter action')
+      res.json('Performed play action')
     }
   })
 })
